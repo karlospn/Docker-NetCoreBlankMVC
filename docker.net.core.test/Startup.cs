@@ -39,8 +39,9 @@ namespace docker.net.core.test
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
+            //TODO: Move ConnectionString into config JSON
             services.AddEntityFrameworkNpgsql().AddDbContext<DockerCommandsDbContext>(options =>
-                    options.UseNpgsql("User ID=postgres;Server=localhost;Port=5432;Database=mydocker;Integrated Security=true;Pooling=true;"));
+                    options.UseNpgsql("User ID=postgres;Server=postgres;Port=5432;Database=mydocker;Integrated Security=true;Pooling=true;"));
 
             services.AddScoped<IDockerCommandsRepository, DockerCommandsRepository>();
             services.AddMvc();
