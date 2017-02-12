@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using docker.net.core.test.Context;
+using docker.net.core.test.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -36,6 +39,10 @@ namespace docker.net.core.test
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
+            services.AddEntityFrameworkNpgsql().AddDbContext<DockerCommandsDbContext>(options =>
+                    options.UseNpgsql("User ID=postgres;Server=localhost;Port=5432;Database=mydocker;Integrated Security=true;Pooling=true;"));
+
+            services.AddScoped<IDockerCommandsRepository, DockerCommandsRepository>();
             services.AddMvc();
         }
 
