@@ -2,14 +2,39 @@
 
 services:
 
-  web:
-    container_name: 'aspnetcoreapp'
+  nginx:
+    container_name: nginx
+    image: nginx
+    build: 
+      context: .
+      dockerfile: nginx.dockerfile
+    links:
+    - aspnetcoreapp1:aspnetcoreapp1
+    - aspnetcoreapp2:aspnetcoreapp2
+    ports:
+    - "8000:8000"
+    networks:
+        - aspnetcoreapp-network
+
+  aspnetcoreapp1:
+    container_name: 'aspnetcoreapp1'
     image: 'aspnetcoreapp'
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: netcore.dockerfile
     ports:
-     - "5000:5000"
+     - "5000"
+    networks:
+      - aspnetcoreapp-network
+
+  aspnetcoreapp2:
+    container_name: 'aspnetcoreapp2'
+    image: 'aspnetcoreapp'
+    build:
+      context: .
+      dockerfile: netcore.dockerfile
+    ports:
+     - "5000"
 
     networks:
       - aspnetcoreapp-network
