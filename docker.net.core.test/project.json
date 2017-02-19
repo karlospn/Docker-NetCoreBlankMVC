@@ -29,7 +29,8 @@
     "Microsoft.EntityFrameworkCore.Tools": {
       "type": "build",
       "version": "1.1.0-preview4-final"
-    }
+    },
+    "MongoDB.Driver": "2.4.2"
   },
 
   "tools": {

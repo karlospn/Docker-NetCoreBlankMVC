@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using docker.net.core.test.Context;
 using docker.net.core.test.Repository;
+using docker.net.core.test.Repository.Mongo;
+using docker.net.core.test.Repository.Postgres;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -43,7 +45,8 @@ namespace docker.net.core.test
             services.AddEntityFrameworkNpgsql().AddDbContext<DockerCommandsDbContext>(options =>
                     options.UseNpgsql("User ID=postgres;Server=postgres;Port=5432;Database=mydocker;Integrated Security=true;Pooling=true;"));
 
-            services.AddScoped<IDockerCommandsRepository, DockerCommandsRepository>();
+            services.AddScoped<IPostgresDockerCommandsRepository, PostgresDockerCommandsRepository>();
+            services.AddScoped<IMongoDockerCommandsRepository, MongoDockerCommandsRepository>();
             services.AddMvc();
         }
 
@@ -76,11 +79,6 @@ namespace docker.net.core.test
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            // Create DB on startup
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                serviceScope.ServiceProvider.GetService<DockerCommandsDbContext>().Database.Migrate();
-            }
         }
     }
 }

@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using docker.net.core.test.Models;
 
-namespace docker.net.core.test.Repository
+namespace docker.net.core.test.Repository.Mongo
 {
 
-    public interface IDockerCommandsRepository
+    public interface IMongoDockerCommandsRepository
     {
         Task<List<DockerCommand>> GetDockerCommandsAsync();
     }

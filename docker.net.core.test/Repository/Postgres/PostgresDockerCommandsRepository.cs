@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using docker.net.core.test.Context;
 using docker.net.core.test.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace docker.net.core.test.Repository
+namespace docker.net.core.test.Repository.Postgres
 {
-    public class DockerCommandsRepository : IDockerCommandsRepository
+    public class PostgresDockerCommandsRepository : IPostgresDockerCommandsRepository
     {
         private readonly DockerCommandsDbContext _context;
         private readonly ILogger _logger;
 
-        public DockerCommandsRepository(DockerCommandsDbContext context, ILoggerFactory loggerFactory)
+        public PostgresDockerCommandsRepository(DockerCommandsDbContext context, ILoggerFactory loggerFactory)
         {
             _context = context;
             _logger = loggerFactory.CreateLogger("DockerCommandsRepository");

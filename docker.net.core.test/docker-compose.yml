@@ -1,7 +1,6 @@
-﻿version: '2'
+﻿version: '3'
 
 services:
-
   nginx:
     container_name: nginx
     image: nginx
@@ -19,6 +18,8 @@ services:
   aspnetcoreapp1:
     container_name: 'aspnetcoreapp1'
     image: 'aspnetcoreapp'
+    environment:
+    - Database=1
     build:
       context: .
       dockerfile: netcore.dockerfile
@@ -30,12 +31,13 @@ services:
   aspnetcoreapp2:
     container_name: 'aspnetcoreapp2'
     image: 'aspnetcoreapp'
+    environment:
+    - Database=2
     build:
       context: .
       dockerfile: netcore.dockerfile
     ports:
      - "5000"
-
     networks:
       - aspnetcoreapp-network
 
@@ -49,10 +51,22 @@ services:
     networks:
       - aspnetcoreapp-network
 
+  mongo:
+    container_name: 'mongo'
+    image: mongo
+    ports:
+     - "27017:27017"
+    volumes:
+     - mongodb:/data/db
+    networks:
+      - aspnetcoreapp-network
+
 networks:
   aspnetcoreapp-network:
     driver: bridge
 
 volumes:
   db:
+    external: true
+  mongodb:
     external: true
