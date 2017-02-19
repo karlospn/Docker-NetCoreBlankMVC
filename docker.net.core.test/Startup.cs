@@ -75,6 +75,12 @@ namespace docker.net.core.test
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            // Create DB on startup
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                serviceScope.ServiceProvider.GetService<DockerCommandsDbContext>().Database.Migrate();
+            }
         }
     }
 }
