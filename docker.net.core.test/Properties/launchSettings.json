@@ -13,7 +13,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "Database": "1"
+        "Database": "2"
       }
     },
     "docker.net.core.test": {

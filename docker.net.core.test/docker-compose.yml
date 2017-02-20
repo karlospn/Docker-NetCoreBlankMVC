@@ -61,6 +61,14 @@ services:
     networks:
       - aspnetcoreapp-network
 
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+     - "6379:6379"
+    networks:
+     - aspnetcoreapp-network
+
 networks:
   aspnetcoreapp-network:
     driver: bridge
